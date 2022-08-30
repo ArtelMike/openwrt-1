@@ -1,0 +1,66 @@
+--- a/board/freescale/common/sys_eeprom.c
++++ b/board/freescale/common/sys_eeprom.c
+@@ -45,20 +45,29 @@ static struct __attribute__ ((__packed__
+ 	u32 crc;          /* 0x72        CRC32 checksum */
+ #endif
+ #ifdef CONFIG_SYS_I2C_EEPROM_NXID
++        /* ARTEL
++         * NOTE Changes here must also be reflected in the linux application library
++         */
+ 	u8 id[4];         /* 0x00 - 0x03 EEPROM Tag 'NXID' */
+ 	u8 sn[12];        /* 0x04 - 0x0F Serial Number */
+ 	u8 errata[5];     /* 0x10 - 0x14 Errata Level */
+ 	u8 date[6];       /* 0x15 - 0x1a Build Date */
+-	u8 res_0;         /* 0x1b        Reserved */
++	u8 hwrev;         /* 0x1b        Artel Hardware Rev */
+ 	u32 version;      /* 0x1c - 0x1f NXID Version */
+ 	u8 tempcal[8];    /* 0x20 - 0x27 Temperature Calibration Factors */
+ 	u8 tempcalsys[2]; /* 0x28 - 0x29 System Temperature Calibration Factors */
+ 	u8 tempcalflags;  /* 0x2a        Temperature Calibration Flags */
+-	u8 res_1[21];     /* 0x2b - 0x3f Reserved */
++	u8 pn[21];        /* 0x2b - 0x3f Manufacturing Part Number */
+ 	u8 mac_count;     /* 0x40        Number of MAC addresses */
+ 	u8 mac_flag;      /* 0x41        MAC table flags */
+ 	u8 mac[MAX_NUM_PORTS][6];     /* 0x42 - 0xa1 MAC addresses */
+-	u8 res_2[90];     /* 0xa2 - 0xfb Reserved */	
++	u8 brdType;       /* 0xa2        DLMgr BrdType */
++	u8 brdExtType;    /* 0xa3        DLMgr Extended BrdType (future use)*/
++	u32 runTime;      /* 0xa4 - 0xa7 Module runtime in hours*/
++	u8 res_2[64];     /* 0xa8 - 0xfb Reserved */
++        	          /* This is wrong. There should be 20 more bytes assigned */
++                          /* but because this was wrong from the get-go it is      */
++                          /* difficult to change it now...                         */
+ 	u32 crc;          /* 0xfc - 0xff CRC32 checksum */
+ #endif
+ } e;
+@@ -94,8 +103,15 @@ static void show_eeprom(void)
+ 	printf("ID: %c%c%c%c\n", e.id[0], e.id[1], e.id[2], e.id[3]);
+ #endif
+ 
++	/* BoardType*/
++	printf("BoardType: 0x%2X\n", e.brdType);
++	/* BoardExtType*/
++	printf("XBoardType extended: 0x%2X\n", e.brdExtType);
++
+ 	/* Serial number */
+ 	printf("SN: %s\n", e.sn);
++	/* Part number */
++	printf("PN: %s\n", e.pn);
+ 
+ 	/* Errata level. */
+ #ifdef CONFIG_SYS_I2C_EEPROM_NXID
+@@ -202,12 +218,14 @@ static int prog_eeprom(void)
+ #endif
+ 
+ 	/* Set the reserved values to 0xFF   */
++#if 0	/* ARTEL */
+ #ifdef CONFIG_SYS_I2C_EEPROM_NXID
+ 	e.res_0 = 0xFF;
+ 	memset(e.res_1, 0xFF, sizeof(e.res_1));
+ #else
+ 	memset(e.res_0, 0xFF, sizeof(e.res_0));
+ #endif
++#endif	/* ARTEL */
+ 	update_crc();
+ 
+ #ifdef CONFIG_SYS_EEPROM_BUS_NUM
