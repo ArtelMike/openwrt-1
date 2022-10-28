@@ -1,4 +1,12 @@
-  _______                     ________        __
+Artel Video Systems SMART Media Delivery Platform GPL repository
+
+Modifications to the Layerscape ls1021a-iot board support files to run on
+the Artel SMART platform.
+ 
+ 
+ 
+ 
+ _______                     ________        __
  |       |.-----.-----.-----.|  |  |  |.----.|  |_
  |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
  |_______||   __|_____|__|__||________||__|  |____|
