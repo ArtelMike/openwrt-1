@@ -1,3 +1,12 @@
+![Artel logo](include/artel.png)
+
+## Artel Video Systems SMART Media Delivery Platform GPL repository
+
+Future releases of the SMART Media Delivery Platform will be derived from the
+OpenWrt Project.
+
+
+
 ![OpenWrt logo](include/logo.png)
 
 OpenWrt Project is a Linux operating system targeting embedded devices. Instead
