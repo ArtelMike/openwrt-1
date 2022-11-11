@@ -2,10 +2,9 @@
 
 ## Artel Video Systems SMART Media Delivery Platform GPL repository
 
-Future releases of the SMART Media Delivery Platform will be derived from the
-OpenWrt Project.
+Future releases of the SMART Media Delivery Platform will be derived from the OpenWrt Project.
 
-
+##
 
 ![OpenWrt logo](include/logo.png)
 
