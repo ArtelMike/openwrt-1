@@ -4,7 +4,7 @@
 
 define Device/Default
   PROFILES := Default
-  FILESYSTEMS := squashfs
+  FILESYSTEMS := ext4
   IMAGES := firmware.bin sysupgrade.bin
   KERNEL := kernel-bin | uImage none
   KERNEL_INITRAMFS = kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
