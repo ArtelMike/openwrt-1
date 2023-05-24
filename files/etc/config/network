@@ -7,7 +7,7 @@ config interface 'loopback'
 
 config interface 'lan'
 	option device 'eth0'
-	option proto 'manual'
+	option proto 'dhcp'
 
 config interface 'fpga'
 	option device 'eth1'
